@@ -1,0 +1,20 @@
+stages:
+  - Build
+
+Cross-Cloud:
+  image: crosscloudci/debian-docker 
+  stage: Build
+  script:
+    - git clone https://github.com/crosscloudci/cross-cloud.git -b production && cd ./cross-cloud
+    - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
+    - docker build --pull -t "$CI_REGISTRY_IMAGE/provisioning:production" .
+    - docker push "$CI_REGISTRY_IMAGE/provisioning:production"
+
+Socat:
+  stage: Build
+  image: crosscloudci/debian-docker
+  script:
+    - git clone https://github.com/crosscloudci/cross-cloud.git -b production && cd ./cross-cloud
+    - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
+    - docker build --pull -t "$CI_REGISTRY_IMAGE/socat:production" ./socat/
+    - docker push "$CI_REGISTRY_IMAGE/socat:production"
