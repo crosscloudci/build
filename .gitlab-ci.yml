@@ -8,6 +8,7 @@ Cross-Cloud:
     - git clone https://github.com/crosscloudci/cross-cloud.git -b "$CI_COMMIT_REF_SLUG" && cd ./cross-cloud
     - docker login "$CI_REGISTRY" -u "$DOCKER_USER" -p "$DOCKER_TOKEN"
     - docker build --pull -t "$CI_REGISTRY/cncf/cross-cloud/provisioning:$CI_COMMIT_REF_SLUG" .
+    - sleep 10000000
     - docker push "$CI_REGISTRY/cncf/cross-cloud/provisioning:$CI_COMMIT_REF_SLUG"
 
 Socat:
